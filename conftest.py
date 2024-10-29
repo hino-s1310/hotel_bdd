@@ -7,6 +7,7 @@ from pages.login import LoginPage
 from pages.mypage import MyPage
 from pages.plans import PlansPage
 from pages.reserve import ReservePage
+from pages.signup import SignUpPage
 
 from playwright.sync_api import Page
 
@@ -29,3 +30,7 @@ def plans_page(page: Page) -> PlansPage:
 @pytest.fixture
 def reserve_page(page: Page) -> ReservePage:
     return ReservePage(page)
+
+@pytest.fixture
+def signup_page(page: Page) -> SignUpPage:
+    return SignUpPage(page)

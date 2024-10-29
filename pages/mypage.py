@@ -9,6 +9,10 @@ class MyPage:
         self.email_text = page.locator("id=email")
         self.username_text = page.locator("id=username")
         self.rank_text = page.locator("id=rank")
+        self.address_text = page.locator("id=address")
+        self.phone_text = page.locator("id=tel")
+        self.gender_text = page.locator("id=gender")
+        self.notification_text = page.locator("id=notification")
         self.logout_button = page.get_by_role("button", name="ログアウト")
         self.reserve_link = page.get_by_role("link", name="宿泊予約")
 
