@@ -12,6 +12,7 @@ class MyPage:
         self.address_text = page.locator("id=address")
         self.phone_text = page.locator("id=tel")
         self.gender_text = page.locator("id=gender")
+        self.birthday_text = page.locator("id=birthday")
         self.notification_text = page.locator("id=notification")
         self.logout_button = page.get_by_role("button", name="ログアウト")
         self.reserve_link = page.get_by_role("link", name="宿泊予約")
