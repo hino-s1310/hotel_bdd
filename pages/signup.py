@@ -15,9 +15,7 @@ class SignUpPage:
         self.address_input = page.get_by_role("textbox", name="住所")
         self.phone_input = page.get_by_role("textbox", name="電話番号")
         self.gender_combobox = page.get_by_role("combobox", name="性別")
-        self.birth_year_input = page.get_by_role("spinbutton", name="年")
-        self.birth_month_input = page.get_by_role("spinbutton", name="月")
-        self.birth_day_input = page.get_by_role("spinbutton", name="日")
+        self.birthday_input = page.locator("id=birthday")
         self.notification_checkbox = page.get_by_role("checkbox", name="お知らせを受け取る")
         self.signup_button = page.get_by_role("button", name="登録")
 
@@ -62,18 +60,11 @@ class SignUpPage:
         self.gender_combobox.select_option(gender)
 
     # 誕生日入力
-    def fill_birthday(self, birth_year, birth_month, birth_day) -> None:
-        # 誕生年入力
-        self.birth_year_input.click()
-        self.birth_year_input.fill(birth_year)
-
-        # 誕生月入力
-        self.birth_month_input.click()
-        self.birth_month_input.fill(birth_month)
+    def fill_birthday(self, birth_day) -> None:
+#        birth_day = str(year) + "-" + str(month) + "-" + str(day)
 
         # 誕生日入力
-        self.birth_day_input.click()
-        self.birth_day_input.fill(birth_day)
+        self.birthday_input.fill(birth_day)
 
     # 引数の値によってお知らせを受け取るかどうかチェックする
     def check_notification(self, check_flag) -> None:

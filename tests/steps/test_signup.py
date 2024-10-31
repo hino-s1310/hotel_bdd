@@ -67,10 +67,10 @@ def step_when(signup_page: SignUpPage, phone):
 def step_when(signup_page: SignUpPage, gender):
     signup_page.select_gender(gender)
 
-""" # 生年月日欄に「<year>」、「<month>」、「<day>」を入力する
-@when(parsers.parse('生年月日欄に「{year}」、「{month}」、「{day}」を入力する'))
-def step_when(signup_page: SignUpPage, year, month, day):
-    signup_page.fill_birthday(year, month, day) """
+# 生年月日欄に「<year>」、「<month>」、「<day>」を入力する
+@when(parsers.parse('生年月日欄に「{birthday}」を入力する'))
+def step_when(signup_page: SignUpPage, birthday):
+    signup_page.fill_birthday(birthday)
 
 # お知らせを<check_flag>
 @when(parsers.parse('お知らせを{check_flag}'))
@@ -117,11 +117,10 @@ def step_then(my_page: MyPage, phone):
 def step_then(my_page: MyPage, gender):
     expect(my_page.gender_text).to_contain_text(gender)
 
-""" # 生年月日が「<year>年<month>月<day>日」であることを確認する
-@then(parsers.parse('生年月日が「{year}年{month}月{day}日」であることを確認する'))
-def step_then(my_page: MyPage, year,month,day):
-    birthday = year+"年"+month+"月"+day+"日"
-    expect(my_page.birthday_text).to_contain_text(birthday) """
+# 生年月日が「<year>年<month>月<day>日」であることを確認する
+@then(parsers.parse('生年月日が「{validate_birthday}」であることを確認する'))
+def step_then(my_page: MyPage, validate_birthday):
+    expect(my_page.birthday_text).to_contain_text(validate_birthday) 
 
 # お知らせが「<check_flag>」であることを確認する
 @then(parsers.parse('お知らせが「{check_flag}」であることを確認する'))
