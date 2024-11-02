@@ -29,3 +29,6 @@ Feature: HOTEL_PLANISPHEREログイン
     Examples:
     | name | email | password | password_confirm | rank | address | phone | gender | birthday | validate_birthday | check_flag |  
     | 森本雄介 | yusuke@example.com | pazzw0rd | pazzw0rd | プレミアム会員 | 豊島区 | 04099999999 | 男性 | 1999-01-01 | 1999年1月1日 | 受け取る |  
+    | 佐々木明 | msasaki@example.com | pass0825 | pass0825 | プレミアム会員 | 千葉県千葉市 | 05099999999 | 女性 | 1995-07-21 | 1995年7月21日 | 受け取らない |  
+    | 松田耕作 | komatsu223@example.com | pazzw0rd | pazzw0rd | 一般会員 | 埼玉県寄居町 | 06099999999 | 男性 | 1995-09-13 | 1995年9月13日 | 受け取る |  
+    | 高田真美 | mamidesu@example.com | mtaka01234 | mtaka01234 | 一般会員 | 神奈川県川崎市 | 03099999999 | 女性 | 1994-03-22 | 1994年3月22日 | 受け取らない |  

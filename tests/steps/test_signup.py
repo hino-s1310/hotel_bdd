@@ -67,7 +67,7 @@ def step_when(signup_page: SignUpPage, phone):
 def step_when(signup_page: SignUpPage, gender):
     signup_page.select_gender(gender)
 
-# 生年月日欄に「<year>」、「<month>」、「<day>」を入力する
+# 生年月日欄に「<birthday>」を入力する
 @when(parsers.parse('生年月日欄に「{birthday}」を入力する'))
 def step_when(signup_page: SignUpPage, birthday):
     signup_page.fill_birthday(birthday)

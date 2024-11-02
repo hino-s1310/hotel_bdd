@@ -41,10 +41,10 @@ class SignUpPage:
     # 会員ランクのラジオボックスを選択
     def  select_rank(self, rank) -> None:
         if rank == "プレミアム会員":
-            if not self.premium_rank_radiobox.is_checked() == False:
+            if not self.premium_rank_radiobox.is_checked() == True:
                 self.premium_rank_radiobox.check()
         elif rank == "一般会員":
-            if not self.normal_rank_radiobox_rank_radiobox.is_checked() == False:
+            if not self.normal_rank_radiobox.is_checked() == True:
                 self.normal_rank_radiobox.check()
 
     # 住所欄入力
