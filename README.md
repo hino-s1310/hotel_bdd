@@ -1,0 +1,2 @@
+pytest-playwrightとpytest-bddを使用して、
+テスト自動化練習サイト「HOTEL PLANISPHERE」の自動テストを構築するリポジトリ
