@@ -61,8 +61,6 @@ class SignUpPage:
 
     # 誕生日入力
     def fill_birthday(self, birth_day) -> None:
-#        birth_day = str(year) + "-" + str(month) + "-" + str(day)
-
         # 誕生日入力
         self.birthday_input.fill(birth_day)
 
