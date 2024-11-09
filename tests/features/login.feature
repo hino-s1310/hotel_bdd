@@ -1,6 +1,6 @@
 Feature: HOTEL_PLANISPHEREログイン
 
-  Scenario Outline: Login
+  Scenario Outline: login
     Given HOTELPLANISPHEREのホームページにアクセスする
     When ログインボタンを押下する
     And email、パスワード欄に「<email>」、「<password>」と入力しログインボタンを押下する

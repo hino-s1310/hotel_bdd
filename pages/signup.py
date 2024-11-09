@@ -1,4 +1,4 @@
-from playwright.sync_api import Page, expect
+from playwright.sync_api import Page
 
 class SignUpPage:
     URL = "https://hotel.testplanisphere.dev/ja/signup.html"

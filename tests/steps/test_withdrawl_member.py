@@ -1,6 +1,5 @@
 import re
 
-
 from pages.home import HomePage
 from pages.signup import SignUpPage
 from pages.mypage import MyPage
@@ -9,7 +8,7 @@ from playwright.sync_api import Page,expect
 from pytest_bdd import scenarios, given, when, then, parsers
 
 # ガーキンファイルの読み込み
-scenarios('signup.feature')
+scenarios('withdrawl_member.feature')
 
 @given('HOTELPLANISPHEREのホームページにアクセスする')
 def step_given(home_page: HomePage):
@@ -19,7 +18,7 @@ def step_given(home_page: HomePage):
 def step_when(home_page: HomePage):
     home_page.click_signup()
 
-@when('ページの見出しが「会員登録」であることを確認する')
+@when(parsers.parse('ページの見出しが「会員登録」であることを確認する'))
 def step_when(signup_page: SignUpPage):
     expect(signup_page.signup_heading).to_contain_text("会員登録")
 
@@ -63,45 +62,26 @@ def step_when(signup_page: SignUpPage, birthday):
 def step_when(signup_page: SignUpPage, check_flag):
     signup_page.check_notification(check_flag)
 
-@when('登録ボタンを押下する')
+@when(parsers.parse('登録ボタンを押下する'))
 def step_when(signup_page: SignUpPage):
     signup_page.click_signup()
 
-@then('ページの見出しが「マイページ」であることを確認する')
-def step_then(my_page: MyPage):
+@when(parsers.parse('ページの見出しが「マイページ」であることを確認する'))
+def step_when(my_page: MyPage):
     expect(my_page.mypage_heading).to_contain_text("マイページ")
 
-@then(parsers.parse('メールアドレスが「{email}」であることを確認する'))
-def step_then(my_page: MyPage, email):
-    expect(my_page.email_text).to_contain_text(email)
+@when(parsers.parse('退会するボタンを押下'))
+def step_when(my_page: MyPage):
+    my_page.withdraw_member()
 
-@then(parsers.parse('氏名が「{name}」であることを確認する'))
-def step_then(my_page: MyPage, name):
-    expect(my_page.username_text).to_contain_text(name)
+@then(parsers.parse('タイトルに「HOTEL PLANISPHERE」が含まれていることを確認'))
+def step_then(page: Page):
+    expect(page).to_have_title(re.compile("HOTEL PLANISPHERE"))
 
-@then(parsers.parse('会員ランクが「{rank}」であることを確認する'))
-def step_then(my_page: MyPage, rank):
-    expect(my_page.rank_text).to_contain_text(rank)
 
-@then(parsers.parse('住所が「{address}」であることを確認する'))
-def step_then(my_page: MyPage, address):
-    expect(my_page.address_text).to_contain_text(address)
 
-@then(parsers.parse('電話番号が「{phone}」であることを確認する'))
-def step_then(my_page: MyPage, phone):
-    expect(my_page.phone_text).to_contain_text(phone)
 
-@then(parsers.parse('性別が「{gender}」であることを確認する'))
-def step_then(my_page: MyPage, gender):
-    expect(my_page.gender_text).to_contain_text(gender)
 
-@then(parsers.parse('生年月日が「{validate_birthday}」であることを確認する'))
-def step_then(my_page: MyPage, validate_birthday):
-    expect(my_page.birthday_text).to_contain_text(validate_birthday) 
-
-@then(parsers.parse('お知らせが「{check_flag}」であることを確認する'))
-def step_then(my_page: MyPage, check_flag):
-    expect(my_page.notification_text).to_contain_text(check_flag)
 
 
 

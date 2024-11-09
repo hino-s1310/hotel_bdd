@@ -1,4 +1,4 @@
-Feature: HOTEL_PLANISPHEREログイン
+Feature: 会員登録を行い、マイページの表示内容を確認する
 
   Scenario Outline: Signup
     Given HOTELPLANISPHEREのホームページにアクセスする

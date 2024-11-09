@@ -1,15 +1,14 @@
-import re
-
-
 from pages.home import HomePage
 from pages.signup import SignUpPage
 from pages.mypage import MyPage
+from pages.icon import IconPage
+import datetime
 
-from playwright.sync_api import Page,expect
+from playwright.sync_api import expect
 from pytest_bdd import scenarios, given, when, then, parsers
 
 # ガーキンファイルの読み込み
-scenarios('signup.feature')
+scenarios('set_icon.feature')
 
 @given('HOTELPLANISPHEREのホームページにアクセスする')
 def step_given(home_page: HomePage):
@@ -67,41 +66,51 @@ def step_when(signup_page: SignUpPage, check_flag):
 def step_when(signup_page: SignUpPage):
     signup_page.click_signup()
 
+@when('ページの見出しが「マイページ」であることを確認する')
+def step_when(my_page: MyPage):
+    expect(my_page.mypage_heading).to_contain_text("マイページ")
+
+@when('アイコン設定ボタンを押下する')
+def step_when(my_page: MyPage):
+    my_page.click_set_icon()
+
+@when('ページの見出しが「アイコン設定」であることを確認する')
+def step_when(icon_page: IconPage):
+    expect(icon_page.iconpage_heading).to_contain_text("アイコン設定")
+
+@when(parsers.parse('「{img_path}」をアップロードする'))
+def step_when(icon_page: IconPage, img_path):
+    icon_page.upload_img(img_path)
+
+@when(parsers.parse('拡大・縮小を「{slider_value}」に設定する'))
+def step_when(icon_page: IconPage, slider_value):
+    icon_page.set_scaling(slider_value)
+
+@when(parsers.parse('枠線の色を「{RGB_value}」に設定する'))
+def step_when(icon_page: IconPage, RGB_value):
+    icon_page.fill_color(RGB_value)
+
+@when('確定ボタンを押下する')
+def step_when(icon_page: IconPage):
+    icon_page.click_confirm()
+
 @then('ページの見出しが「マイページ」であることを確認する')
 def step_then(my_page: MyPage):
     expect(my_page.mypage_heading).to_contain_text("マイページ")
 
-@then(parsers.parse('メールアドレスが「{email}」であることを確認する'))
-def step_then(my_page: MyPage, email):
-    expect(my_page.email_text).to_contain_text(email)
+@then('アイコンが存在することを確認する')
+def step_then(my_page: MyPage):
+    expect(my_page.icon).to_be_visible()
 
-@then(parsers.parse('氏名が「{name}」であることを確認する'))
-def step_then(my_page: MyPage, name):
-    expect(my_page.username_text).to_contain_text(name)
+@then(parsers.parse('アイコンの枠の色が「{validate_RGB_value}」であることを確認する'))
+def step_then(my_page: MyPage, validate_RGB_value):
+    expect(my_page.icon).to_have_css("background-color", validate_RGB_value)
 
-@then(parsers.parse('会員ランクが「{rank}」であることを確認する'))
-def step_then(my_page: MyPage, rank):
-    expect(my_page.rank_text).to_contain_text(rank)
+@then(parsers.parse('アイコンのスクリーンショットを撮影し、「{screenshot_path}」に格納する'))
+def step_then(my_page: MyPage, screenshot_path):
+    now = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+    my_page.icon.screenshot(path=screenshot_path + now + "_icon_screenshot.png")
 
-@then(parsers.parse('住所が「{address}」であることを確認する'))
-def step_then(my_page: MyPage, address):
-    expect(my_page.address_text).to_contain_text(address)
-
-@then(parsers.parse('電話番号が「{phone}」であることを確認する'))
-def step_then(my_page: MyPage, phone):
-    expect(my_page.phone_text).to_contain_text(phone)
-
-@then(parsers.parse('性別が「{gender}」であることを確認する'))
-def step_then(my_page: MyPage, gender):
-    expect(my_page.gender_text).to_contain_text(gender)
-
-@then(parsers.parse('生年月日が「{validate_birthday}」であることを確認する'))
-def step_then(my_page: MyPage, validate_birthday):
-    expect(my_page.birthday_text).to_contain_text(validate_birthday) 
-
-@then(parsers.parse('お知らせが「{check_flag}」であることを確認する'))
-def step_then(my_page: MyPage, check_flag):
-    expect(my_page.notification_text).to_contain_text(check_flag)
 
 
 
