@@ -1,4 +1,5 @@
 from playwright.sync_api import Page
+import datetime
 
 class ConfirmPage:
     URL = "https://hotel.testplanisphere.dev/ja/confirm.html"
@@ -7,12 +8,13 @@ class ConfirmPage:
         self.page = page
         self.confirm_heading = page.get_by_role("heading", name="宿泊予約確認")
         self.total_bill = page.locator("id=total-bill")
+        self.plan_name = page.locator("id=plan-name")
         self.term = page.locator("id=term")
         self.head_count = page.locator("id=head-count")
         self.plans = page.locator("id=plans")
         self.username = page.locator("id=username")
         self.contact = page.locator("id=contact")
-        self.coment = page.locator("id=comment")
+        self.comment = page.locator("id=comment")
         self.confirm_button = page.get_by_role("button", name="この内容で予約する")
         self.modal_title = page.locator("class=modal-title")
         self.modal_body_text = page.locator(".modal-body > p")
@@ -24,6 +26,12 @@ class ConfirmPage:
     
     def click_confirm(self) -> None:
         self.confirm_button.click()
+
+    def calc_term(self, stay_num) -> str:
+        term_from = datetime.datetime.now()
+        term_to = term_from + datetime.timedelta(days=stay_num)
+        term = term_from.strftime('%Y年%m月%d日') + " 〜 " + term_to.strftime('%Y年%m月%d日') 
+        return term
 
         
 

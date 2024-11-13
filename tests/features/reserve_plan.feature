@@ -9,7 +9,7 @@ Feature: 既存会員でログインし、プランの予約を行う
     And ページの見出しが「宿泊プラン一覧」であることを確認する
     And 「<plan_name>」カードのこのプランで予約ボタンを押下する
     And ページの見出しが「宿泊予約」であることを確認する
-    And 宿泊日欄に今日の日付を入力する
+    And 宿泊日欄に明日の日付を入力する
     And 宿泊数欄に「<stay_num>」を入力する
     And 人数欄に「<people_num>」を入力する
     And 朝食プランのチェックボックスを「<flag_morning>」にする
@@ -27,9 +27,9 @@ Feature: 既存会員でログインし、プランの予約を行う
     And 確認のご連絡が「<confirm_contact>」であることを確認する
     And ご要望・ご連絡事項等が「<comment>」であることを確認する
     And この内容で予約するボタンを押下する
-    And ページの見出しが「宿泊予約確認」であることを確認する
+    And ページの見出しが「宿泊プラン一覧」であることを確認する
 
 
     Examples:
     | name | email | password | plan_name | stay_num | people_num | flag_morning | flag_noon_checkin | flag_reasnable_sightseeing | confirm_contact | total_bill | additional_plan | comment |
-    | 山田一郎 | ichiro@example.com | password | おすすめプラン | 1 | 1 | False | False | False | 希望しない | 8,750 | なし | なし |
+    | 山田一郎 | ichiro@example.com | password | お得な特典付きプラン | 1 | 1 | False | False | False | 希望しない | 8,750 | なし | なし |
