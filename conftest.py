@@ -1,6 +1,4 @@
-import pytest
-import re
-
+import pytest,re
 from components.header import Header
 from pages.home import HomePage
 from pages.login import LoginPage
@@ -12,6 +10,10 @@ from pages.signup import SignUpPage
 from pages.icon import IconPage
 
 from playwright.sync_api import Page, sync_playwright
+
+@pytest.fixture
+def new_page():
+    pytest.new_page = None
 
 @pytest.fixture(scope="session")
 def browser():

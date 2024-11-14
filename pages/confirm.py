@@ -20,17 +20,20 @@ class ConfirmPage:
         self.modal_body_text = page.locator(".modal-body > p")
         self.modal_close_button = page.locator(".modal-footer > button")
 
-
     def load(self) -> None:
         self.page.goto(self.URL)
     
     def click_confirm(self) -> None:
         self.confirm_button.click()
+        self.page.on("dialog", lambda dialog: dialog.accept())
 
     def calc_term(self, stay_num) -> str:
         term_from = datetime.datetime.now()
-        term_to = term_from + datetime.timedelta(days=stay_num)
-        term = term_from.strftime('%Y年%m月%d日') + " 〜 " + term_to.strftime('%Y年%m月%d日') 
+        # 翌日を計算
+        term_from = term_from + datetime.timedelta(days= 1)
+        # 翌日から宿泊数を足した日にちを計算
+        term_to = term_from + datetime.timedelta(days=int(stay_num))
+        term = term_from.strftime('%Y年%m月%d日') + " 〜 " + term_to.strftime('%Y年%m月%d日')  + " " + stay_num + "泊"
         return term
 
         

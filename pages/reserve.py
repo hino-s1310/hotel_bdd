@@ -41,17 +41,17 @@ class ReservePage:
 
     # 引数の値によって朝食バイキングチェックボックスの押下を制御する
     def controll_mvc_checkbox(self, add_flag1: bool) -> None:
-        if not self.morning_viking_checkbox.is_checked() == add_flag1:
+        if self.morning_viking_checkbox.is_checked() == add_flag1:
             self.morning_viking_checkbox.check()
 
     # 引数の値によって昼からチェックインチェックボックスの押下を制御する
     def controll_ncc_checkbox(self, add_flag2: bool) -> None:
-        if not self.noon_checkin_checkbox.is_checked() == add_flag2:
+        if self.noon_checkin_checkbox.is_checked() == add_flag2:
             self.noon_checkin_checkbox.check()    
 
     # 引数の値によってお得な観光プランチェックボックスの押下を制御する
     def controll_rsc_checkbox(self, add_flag3: bool) -> None:
-        if not self.reasonable_sightseeing_checkbox.is_checked() == add_flag3:
+        if self.reasonable_sightseeing_checkbox.is_checked() == add_flag3:
             self.reasonable_sightseeing_checkbox.check()
 
     # 確認のご連絡欄を選択する
