@@ -7,9 +7,6 @@ Feature: HOTEL_PLANISPHEREログイン
     Then ページの見出しが「マイページ」であることを確認する
     And マイページの各項目が「<login_validate>」であることを確認する
     And マイページをログアウトする
-    #And メールアドレスが「<email>」であることを確認する
-    #And 氏名が「<name>」であることを確認する
-    #And 会員ランクが「<rank>」であることを確認する  
 
     Examples:
     | login_input | login_validate |  

@@ -1,11 +1,8 @@
-import re
-
-
+import json
 from pages.home import HomePage
 from pages.signup import SignUpPage
 from pages.mypage import MyPage
-
-from playwright.sync_api import Page,expect
+from playwright.sync_api import expect
 from pytest_bdd import scenarios, given, when, then, parsers
 
 # ガーキンファイルの読み込み
@@ -23,44 +20,32 @@ def step_when(home_page: HomePage):
 def step_when(signup_page: SignUpPage):
     expect(signup_page.signup_heading).to_contain_text("会員登録")
 
-@when(parsers.parse('メールアドレス欄に「{email}」を入力する'))
-def step_when(signup_page: SignUpPage, email):
+@when(parsers.parse('会員登録画面で「{signup_input}」を入力する'))
+def step_when(signup_page: SignUpPage, signup_input):
+
+    # JSONを辞書に格納
+    signup_input_dictionaly = json.loads(signup_input)
+    name = signup_input_dictionaly['会員情報_入力']['name']
+    email = signup_input_dictionaly['会員情報_入力']['email']
+    password = signup_input_dictionaly['会員情報_入力']['password']
+    password_confirm = signup_input_dictionaly['会員情報_入力']['password_confirm']
+    rank = signup_input_dictionaly['会員情報_入力']['rank']
+    address = signup_input_dictionaly['会員情報_入力']['address']
+    phone = signup_input_dictionaly['会員情報_入力']['phone']
+    gender = signup_input_dictionaly['会員情報_入力']['gender']
+    birthday = signup_input_dictionaly['会員情報_入力']['birthday']
+    check_flag = signup_input_dictionaly['会員情報_入力']['check_flag']
+    
+    # 各入力欄の入力
     signup_page.fill_email(email)
-
-@when(parsers.parse('パスワード欄に「{password}」を入力する'))
-def step_when(signup_page: SignUpPage, password):
     signup_page.fill_password(password)
-
-@when(parsers.parse('パスワード確認欄に「{password_confirm}」を入力する'))
-def step_when(signup_page: SignUpPage, password_confirm):
     signup_page.fill_password_confirm(password_confirm)
-
-@when(parsers.parse('氏名欄に「{name}」を入力する'))
-def step_when(signup_page: SignUpPage, name):
     signup_page.fill_name(name)
-
-@when(parsers.parse('会員ランクラジオボタンで「{rank}」を選択する'))
-def step_when(signup_page: SignUpPage, rank):
     signup_page.select_rank(rank)
-
-@when(parsers.parse('住所欄に「{address}」を入力する'))
-def step_when(signup_page: SignUpPage, address):
     signup_page.fill_address(address)
-
-@when(parsers.parse('電話番号欄に「{phone}」を入力する'))
-def step_when(signup_page: SignUpPage, phone):
     signup_page.fill_phone(phone)
-
-@when(parsers.parse('性別リストダウンで「{gender}」を選択する'))
-def step_when(signup_page: SignUpPage, gender):
     signup_page.select_gender(gender)
-
-@when(parsers.parse('生年月日欄に「{birthday}」を入力する'))
-def step_when(signup_page: SignUpPage, birthday):
     signup_page.fill_birthday(birthday)
-
-@when(parsers.parse('お知らせを{check_flag}'))
-def step_when(signup_page: SignUpPage, check_flag):
     signup_page.check_notification(check_flag)
 
 @when('登録ボタンを押下する')
@@ -71,37 +56,33 @@ def step_when(signup_page: SignUpPage):
 def step_then(my_page: MyPage):
     expect(my_page.mypage_heading).to_contain_text("マイページ")
 
-@then(parsers.parse('メールアドレスが「{email}」であることを確認する'))
-def step_then(my_page: MyPage, email):
-    expect(my_page.email_text).to_contain_text(email)
+@then(parsers.parse('マイページ画面で各項目が「{signup_validate}」であることを確認する'))
+def step_then(my_page: MyPage, signup_validate):
 
-@then(parsers.parse('氏名が「{name}」であることを確認する'))
-def step_then(my_page: MyPage, name):
-    expect(my_page.username_text).to_contain_text(name)
+    # JSONを辞書に格納
+    signup_validate_dictionaly = json.loads(signup_validate)
+    name = signup_validate_dictionaly['会員情報_検証']['name']
+    email = signup_validate_dictionaly['会員情報_検証']['email']
+    rank = signup_validate_dictionaly['会員情報_検証']['rank']
+    address = signup_validate_dictionaly['会員情報_検証']['address']
+    phone = signup_validate_dictionaly['会員情報_検証']['phone']
+    gender = signup_validate_dictionaly['会員情報_検証']['gender']
+    birthday = signup_validate_dictionaly['会員情報_検証']['birthday']
+    check_flag = signup_validate_dictionaly['会員情報_検証']['check_flag']
 
-@then(parsers.parse('会員ランクが「{rank}」であることを確認する'))
-def step_then(my_page: MyPage, rank):
-    expect(my_page.rank_text).to_contain_text(rank)
+    # 各表示項目の検証
+    expect(my_page.email_text).to_have_text(email)
+    expect(my_page.username_text).to_have_text(name)
+    expect(my_page.rank_text).to_have_text(rank)
+    expect(my_page.address_text).to_have_text(address)
+    expect(my_page.phone_text).to_have_text(phone)
+    expect(my_page.gender_text).to_have_text(gender)
+    expect(my_page.birthday_text).to_have_text(birthday)
+    expect(my_page.notification_text).to_have_text(check_flag) 
 
-@then(parsers.parse('住所が「{address}」であることを確認する'))
-def step_then(my_page: MyPage, address):
-    expect(my_page.address_text).to_contain_text(address)
-
-@then(parsers.parse('電話番号が「{phone}」であることを確認する'))
-def step_then(my_page: MyPage, phone):
-    expect(my_page.phone_text).to_contain_text(phone)
-
-@then(parsers.parse('性別が「{gender}」であることを確認する'))
-def step_then(my_page: MyPage, gender):
-    expect(my_page.gender_text).to_contain_text(gender)
-
-@then(parsers.parse('生年月日が「{validate_birthday}」であることを確認する'))
-def step_then(my_page: MyPage, validate_birthday):
-    expect(my_page.birthday_text).to_contain_text(validate_birthday) 
-
-@then(parsers.parse('お知らせが「{check_flag}」であることを確認する'))
-def step_then(my_page: MyPage, check_flag):
-    expect(my_page.notification_text).to_contain_text(check_flag)
+@then('マイページ画面でログアウトボタンを押下する')
+def step_then(my_page: MyPage):
+    my_page.click_logout()
 
 
 

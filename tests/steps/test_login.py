@@ -18,9 +18,13 @@ def step_when_login(home_page: HomePage):
 
 @when(parsers.parse('ログイン画面で「{login_input}」を入力しログインボタンを押下する'))
 def step_when_login(login_page:LoginPage, login_input):
-    login_input_list = json.loads(login_input)
-    email = login_input_list['ログイン情報']['email']
-    pwd = login_input_list['ログイン情報']['password']
+
+    # JSONを辞書に格納
+    login_input_dictionaly = json.loads(login_input)
+    email = login_input_dictionaly['ログイン情報']['email']
+    pwd = login_input_dictionaly['ログイン情報']['password']
+
+    #　ログインボタンを押下する
     login_page.submit_login(email,pwd)
 
 @then(parsers.parse('ページの見出しが「{heading}」であることを確認する'))
@@ -29,10 +33,14 @@ def step_then(my_page:MyPage, heading):
 
 @then(parsers.parse('マイページの各項目が「{login_validate}」であることを確認する'))
 def step_then(my_page:MyPage, login_validate):
-    login_validate_list = json.loads(login_validate)
-    email = login_validate_list['マイページ情報']['email']
-    name = login_validate_list['マイページ情報']['name']
-    rank = login_validate_list['マイページ情報']['rank']
+
+    # JSONを辞書に格納
+    login_validate_dictionaly = json.loads(login_validate)
+    email = login_validate_dictionaly['マイページ情報']['email']
+    name = login_validate_dictionaly['マイページ情報']['name']
+    rank = login_validate_dictionaly['マイページ情報']['rank']
+
+    # 各項目を検証
     expect(my_page.email_text).to_have_text(email)
     expect(my_page.username_text).to_have_text(name)
     expect(my_page.rank_text).to_have_text(rank)
