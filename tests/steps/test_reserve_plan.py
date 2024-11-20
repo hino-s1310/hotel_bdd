@@ -7,6 +7,7 @@ from pages.reserve import ReservePage
 from pages.confirm import ConfirmPage
 from playwright.sync_api import expect
 from pytest_bdd import scenarios, given, when, then, parsers
+from distutils.util import strtobool
 import pytest, json
 
 # ガーキンファイルの読み込み
@@ -66,9 +67,9 @@ def step_when(reserve_page:ReservePage, reserve_input):
     reserve_input_dictionaly = json.loads(reserve_input)
     stay_num = reserve_input_dictionaly['予約情報_入力']['stay_num']
     people_num = reserve_input_dictionaly['予約情報_入力']['people_num']
-    flag_morning = reserve_input_dictionaly['予約情報_入力']['flag_morning']
-    flag_noon_checkin = reserve_input_dictionaly['予約情報_入力']['flag_noon_checkin']
-    flag_reasnable_sightseeing = reserve_input_dictionaly['予約情報_入力']['flag_reasnable_sightseeing']
+    flag_morning = strtobool(reserve_input_dictionaly['予約情報_入力']['flag_morning'])
+    flag_noon_checkin = strtobool(reserve_input_dictionaly['予約情報_入力']['flag_noon_checkin'])
+    flag_reasnable_sightseeing = strtobool(reserve_input_dictionaly['予約情報_入力']['flag_reasnable_sightseeing'])
     reserve_contact = reserve_input_dictionaly['予約情報_入力']['reserve_contact']
 
     # 各項目を入力する
