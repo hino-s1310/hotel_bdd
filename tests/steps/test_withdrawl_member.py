@@ -8,7 +8,8 @@ from pytest_bdd import scenarios, given, when, then, parsers
 # ガーキンファイルの読み込み
 scenarios('withdrawl_member.feature')
 
-@given('HOTELPLANISPHEREのホームページにアクセスする')
+# conftestに移管
+""" @given('HOTELPLANISPHEREのホームページにアクセスする')
 def step_given(home_page: HomePage):
     home_page.load()
 
@@ -62,7 +63,7 @@ def step_when(my_page: MyPage):
 
 @then(parsers.parse('タイトルに「HOTEL PLANISPHERE」が含まれていることを確認'))
 def step_then(home_page: HomePage):
-    expect(home_page.page).to_have_title(re.compile("HOTEL PLANISPHERE"))
+    expect(home_page.page).to_have_title(re.compile("HOTEL PLANISPHERE")) """
 
 
 

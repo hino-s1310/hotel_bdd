@@ -10,7 +10,7 @@ Feature: HOTEL_PLANISPHEREログイン
 
     Examples:
     | login_input | login_validate |  
-    | {"ログイン情報": {"email": "ichiro@example.com", "password": "password"}} | {"マイページ情報":{"email": "ichiro@example.com" ,"name": "山田一郎" ,"rank": "プレミアム会員"}} | 
-    | {"ログイン情報": {"email": "sakura@example.com", "password": "pass1234"}} | {"マイページ情報":{"email": "sakura@example.com" ,"name": "松本さくら" ,"rank": "一般会員"}} | 
-    | {"ログイン情報": {"email": "jun@example.com", "password": "pa55w0rd!"}} | {"マイページ情報":{"email": "jun@example.com" ,"name": "林潤" ,"rank": "プレミアム会員"}} | 
-    | {"ログイン情報": {"email": " yoshiki@example.com", "password": "pass-pass"}} | {"マイページ情報":{"email": " yoshiki@example.com" ,"name": "木村良樹" ,"rank": "一般会員"}} | 
+    | {"ログイン情報_入力": {"email": "ichiro@example.com", "password": "password"}} | {"マイページ情報_検証":{"email": "ichiro@example.com" ,"name": "山田一郎" ,"rank": "プレミアム会員"}} | 
+    | {"ログイン情報_入力": {"email": "sakura@example.com", "password": "pass1234"}} | {"マイページ情報_検証":{"email": "sakura@example.com" ,"name": "松本さくら" ,"rank": "一般会員"}} | 
+    | {"ログイン情報_入力": {"email": "jun@example.com", "password": "pa55w0rd!"}} | {"マイページ情報_検証":{"email": "jun@example.com" ,"name": "林潤" ,"rank": "プレミアム会員"}} | 
+    | {"ログイン情報_入力": {"email": " yoshiki@example.com", "password": "pass-pass"}} | {"マイページ情報_検証":{"email": " yoshiki@example.com" ,"name": "木村良樹" ,"rank": "一般会員"}} | 

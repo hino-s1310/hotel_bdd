@@ -8,7 +8,8 @@ from pytest_bdd import scenarios, given, when, then, parsers
 # ガーキンファイルの読み込み
 scenarios('signup.feature')
 
-@given('HOTELPLANISPHEREのホームページにアクセスする')
+# conftestbに移管
+""" @given('HOTELPLANISPHEREのホームページにアクセスする')
 def step_given(home_page: HomePage):
     home_page.load()
 
@@ -82,7 +83,7 @@ def step_then(my_page: MyPage, signup_validate):
 
 @then('マイページ画面でログアウトボタンを押下する')
 def step_then(my_page: MyPage):
-    my_page.click_logout()
+    my_page.click_logout() """
 
 
 

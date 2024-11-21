@@ -12,7 +12,8 @@ import pytest, json, datetime
 # ガーキンファイルの読み込み
 scenarios('reserve_plan.feature')
 
-@given('HOTELPLANISPHEREのホームページにアクセスする')
+# conftestに移管
+""" @given('HOTELPLANISPHEREのホームページにアクセスする')
 def step_given(home_page: HomePage):
     home_page.load()
 
@@ -157,4 +158,4 @@ def calc_holiday_price(price) -> str:
         # 料金を1.25倍にする
         return str(int(price) * 1.25)
     else:
-        return price
+        return price """

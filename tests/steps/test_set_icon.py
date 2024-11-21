@@ -9,7 +9,8 @@ import datetime, json
 # ガーキンファイルの読み込み
 scenarios('set_icon.feature')
 
-@given('HOTELPLANISPHEREのホームページにアクセスする')
+# conftestに移管
+""" @given('HOTELPLANISPHEREのホームページにアクセスする')
 def step_given(home_page: HomePage):
     home_page.load()
 
@@ -101,7 +102,7 @@ def step_then(my_page: MyPage, screenshot_path):
 
 @then('マイページをログアウトする')
 def step_then(my_page:MyPage):
-    my_page.click_logout()
+    my_page.click_logout() """
 
 
 
