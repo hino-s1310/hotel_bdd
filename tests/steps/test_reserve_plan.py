@@ -1,4 +1,3 @@
-from components.header import Header
 from pages.home import HomePage
 from pages.login import LoginPage
 from pages.mypage import MyPage
@@ -8,7 +7,7 @@ from pages.confirm import ConfirmPage
 from playwright.sync_api import expect
 from pytest_bdd import scenarios, given, when, then, parsers
 from distutils.util import strtobool
-import pytest, json
+import pytest, json, datetime
 
 # ガーキンファイルの読み込み
 scenarios('reserve_plan.feature')
@@ -86,6 +85,8 @@ def step_when(reserve_page:ReservePage, reserve_total_bill):
     # ページインスタンスの引き継ぎ  
     reserve_page = ReservePage(pytest.new_page)
 
+    #　土日料金か判定し、金額検証
+    reserve_total_bill = calc_holiday_price(reserve_total_bill)
     expect(reserve_page.total_bill).to_contain_text(reserve_total_bill)
 
 @when(parsers.parse('予約内容を確認するボタンを押下する'))
@@ -119,6 +120,7 @@ def step_then(confirm_page:ConfirmPage, confirm_validate):
     comment = confirm_validate_dictionaly['予約確認情報_検証']['comment']
 
     # 各項目の検証
+    confirm_total_bill = calc_holiday_price(confirm_total_bill)
     expect(confirm_page.total_bill).to_contain_text(confirm_total_bill)
     expect(confirm_page.plan_name).to_have_text(reserve_plan_name)
 
@@ -145,3 +147,14 @@ def step_then(plans_page:PlansPage):
 def handle_page(page):
     page.wait_for_load_state()
     print(page.title())
+
+def calc_holiday_price(price) -> str:
+
+    today = datetime.datetime.now()
+    tomorrow = today  + datetime.timedelta(days= 1)
+    # 翌日の曜日を取得し、土日かどうか判定
+    if tomorrow.weekday() >= 5:
+        # 料金を1.25倍にする
+        return str(int(price) * 1.25)
+    else:
+        return price

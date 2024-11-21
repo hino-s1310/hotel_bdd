@@ -61,5 +61,3 @@ class ReservePage:
     # 予約内容を確認するボタンを押下する
     def click_confirm_reserve_button(self) -> None:
         self.confirm_reserve_button.click()
-
-
