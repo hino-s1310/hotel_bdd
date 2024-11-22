@@ -162,13 +162,18 @@ def step_when(reserve_page:ReservePage, reserve_input):
     reserve_page.controll_rsc_checkbox(flag_reasnable_sightseeing)
     reserve_page.select_contact(reserve_contact)
 
-@when(parsers.parse('合計欄が「{reserve_total_bill}」であることを確認する'))
-def step_when(reserve_page:ReservePage, reserve_total_bill):
+@when(parsers.parse('各項目が「{reserve_validate}」であることを確認する'))
+def step_when(reserve_page:ReservePage, reserve_validate):
     # ページインスタンスの引き継ぎ  
     reserve_page = ReservePage(pytest.new_page)
 
+    # JSONを辞書に格納
+    reserve_validate_dictionaly = json.loads(reserve_validate)
+    total_bill_weekday = reserve_validate_dictionaly['予約情報_検証']['total_bill_weekday']
+    total_bill_holiday = reserve_validate_dictionaly['予約情報_検証']['total_bill_holiday']
+
     #　土日料金か判定し、金額検証
-    reserve_total_bill = calc_holiday_price(reserve_total_bill)
+    reserve_total_bill = calc_holiday_price(total_bill_weekday,total_bill_holiday)
     expect(reserve_page.total_bill).to_contain_text(reserve_total_bill)
 
 @when(parsers.parse('予約内容を確認するボタンを押下する'))
@@ -192,7 +197,8 @@ def step_then(confirm_page:ConfirmPage, confirm_validate):
 
     # JSONを辞書に格納
     confirm_validate_dictionaly = json.loads(confirm_validate)
-    confirm_total_bill = confirm_validate_dictionaly['予約確認情報_検証']['confirm_total_bill']
+    total_bill_weekday = confirm_validate_dictionaly['予約確認情報_検証']['total_bill_weekday']
+    total_bill_holiday = confirm_validate_dictionaly['予約確認情報_検証']['total_bill_holiday']
     reserve_plan_name = confirm_validate_dictionaly['予約確認情報_検証']['reserve_plan_name']
     stay_num = confirm_validate_dictionaly['予約確認情報_検証']['stay_num']
     additional_plan = confirm_validate_dictionaly['予約確認情報_検証']['additional_plan']
@@ -202,7 +208,7 @@ def step_then(confirm_page:ConfirmPage, confirm_validate):
     comment = confirm_validate_dictionaly['予約確認情報_検証']['comment']
 
     # 各項目の検証
-    confirm_total_bill = calc_holiday_price(confirm_total_bill)
+    confirm_total_bill = calc_holiday_price(total_bill_weekday, total_bill_holiday)
     expect(confirm_page.total_bill).to_contain_text(confirm_total_bill)
     expect(confirm_page.plan_name).to_have_text(reserve_plan_name)
 
@@ -230,16 +236,16 @@ def handle_page(page):
     page.wait_for_load_state()
     print(page.title())
 
-def calc_holiday_price(price) -> str:
+def calc_holiday_price(price_weekday,price_holiday) -> str:
 
     today = datetime.datetime.now()
     tomorrow = today  + datetime.timedelta(days= 1)
     # 翌日の曜日を取得し、土日かどうか判定
     if tomorrow.weekday() >= 5:
-        # 料金を1.25倍にする
-        return str(int(price) * 1.25)
+        # 休日料金を返却
+        return price_holiday
     else:
-        return price
+        return price_weekday
     
 @when('会員登録リンクを押下する')
 def step_when(home_page: HomePage):
@@ -317,6 +323,7 @@ def step_when(my_page: MyPage):
 def step_when(icon_page: IconPage):
     expect(icon_page.iconpage_heading).to_contain_text("アイコン設定")
 
+
 @when(parsers.parse('アイコン画面で「{icon_input}」を入力する'))
 def step_when(icon_page: IconPage, icon_input):
     #JSONを辞書に読み込み
@@ -326,6 +333,7 @@ def step_when(icon_page: IconPage, icon_input):
     RGB_value = icon_page_dictionaly['アイコン情報_入力']['RGB_value']
 
     # 各項目の入力
+    icon_page.upload_input.wait_for()
     icon_page.upload_img(img_path)
     icon_page.set_scaling(slider_value)
     icon_page.fill_color(RGB_value)
