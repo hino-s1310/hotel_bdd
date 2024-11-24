@@ -15,7 +15,7 @@ Feature: 会員登録を行い、アイコンの設定を行う
     And アイコンが存在することを確認する
     And アイコンの枠の色が「<validate_RGB_value>」であることを確認する
     And アイコンのスクリーンショットを撮影し、「<screenshot_path>」に格納する
-    And マイページをログアウトする
+    And マイページ画面でログアウトボタンを押下する
 
     Examples:
     | signup_input | icon_input | validate_RGB_value | screenshot_path |
